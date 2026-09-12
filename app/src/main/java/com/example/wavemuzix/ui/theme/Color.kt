@@ -1,0 +1,22 @@
+package com.example.wavemuzix.ui.theme
+
+import androidx.compose.ui.graphics.Color
+
+// Premium Dark Palette
+val DeepBlack = Color(0xFF000000)
+val SoftBlack = Color(0xFF121212)
+val SurfaceVariant = Color(0xFF1E1E1E)
+val AccentPrimary = Color(0xFFFF2D55) // Vibrant Pink/Red (Music style)
+val AccentSecondary = Color(0xFF5856D6) // Deep Purple
+val TextPrimary = Color(0xFFFFFFFF)
+val TextSecondary = Color(0xFF8E8E93)
+val GlassEffect = Color(0x99000000)
+val LightRed = Color(0xFFFF6B6B) // Light Red for Toggles
+
+// Legacy (kept for compatibility if needed elsewhere temporarily)
+val Purple80 = Color(0xFFD0BCFF)
+val PurpleGrey80 = Color(0xFFCCC2DC)
+val Pink80 = Color(0xFFEFB8C8)
+val Purple40 = Color(0xFF6650a4)
+val PurpleGrey40 = Color(0xFF625b71)
+val Pink40 = Color(0xFF7D5260)

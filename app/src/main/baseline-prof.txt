@@ -1,0 +1,16 @@
+# Baseline Profile for Wave Muzix
+# Startup Path
+Lcom/example/wavemuzix/MainActivity;
+Lcom/example/wavemuzix/WaveMuzixApp;
+Lcom/example/wavemuzix/uiresource/screens/MainViewModel;
+Lcom/example/wavemuzix/data/MusicPlayer;
+
+# Home Feed Critical Paths
+HScom/example/wavemuzix/uiresource/screens/HomeScreenKt;->HomeScreen
+HScom/example/wavemuzix/uiresource/screens/MainViewModel;->initialize
+HScom/example/wavemuzix/data/MusicPlayer;->getInstance
+
+# UI Rendering
+Landroidx/compose/foundation/lazy/LazyColumnKt;
+Landroidx/compose/foundation/lazy/LazyRowKt;
+Lcom/skydoves/landscapist/glide/GlideImageKt;
