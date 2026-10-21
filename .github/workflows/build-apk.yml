@@ -1,0 +1,62 @@
+name: Build WaveMuzix APK
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+  workflow_dispatch:
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Auto-Extract Project ZIP (Mobile Upload Support)
+        run: |
+          if ls *.zip 1> /dev/null 2>&1; then
+            echo "Found ZIP file in repository root. Extracting..."
+            for z in *.zip; do
+              unzip -o "$z"
+            done
+          fi
+          if [ ! -f "gradlew" ]; then
+            SUBDIR=$(find . -maxdepth 2 -name "gradlew" | head -n 1 | xargs dirname 2>/dev/null || true)
+            if [ -n "$SUBDIR" ] && [ "$SUBDIR" != "." ]; then
+              echo "Moving project files from $SUBDIR to root..."
+              shopt -s dotglob
+              mv "$SUBDIR"/* . || true
+            fi
+          fi
+
+      - name: Set up JDK 17 & 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: |
+            17
+            21
+          cache: 'gradle'
+
+      - name: Accept Android SDK Licenses
+        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+
+      - name: Configure local.properties for Cloud Build
+        run: |
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+
+      - name: Grant Execute Permission for Gradlew
+        run: chmod +x gradlew
+
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Upload Debug APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: WaveMuzix-Debug-APK
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
